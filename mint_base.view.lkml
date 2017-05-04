@@ -1,5 +1,9 @@
-view: mint_andy {
-  sql_table_name: personal_finance.mint_andy ;;
+explore: mint_base_explore {
+  extension: required
+}
+
+view: mint_base_view {
+  extension: required
 
   dimension: account_name {
     type: string

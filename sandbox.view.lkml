@@ -1,4 +1,4 @@
-explore: sandbox {}
+# explore: sandbox {}
 view: sandbox {
   sql_table_name: dumbdumb ;;
 

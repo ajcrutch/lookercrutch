@@ -6,4 +6,6 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
-explore: mint_andy {}
+explore: mint_andy {
+  extends: [mint_block_andy]
+}

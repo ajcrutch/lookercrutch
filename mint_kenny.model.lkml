@@ -10,4 +10,5 @@ include: "*.dashboard"
 
 explore: mint_kenny {
   extends: [mint_block_kenny]
+  view_label: "Mint Data"
 }

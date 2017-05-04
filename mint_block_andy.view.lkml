@@ -2,6 +2,7 @@ include: "mint_base.view.lkml"
 
 explore: mint_block_andy {
   extends: [mint_base_explore]
+  extension: required
   from: mint_block_andy
 }
 

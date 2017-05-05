@@ -9,6 +9,7 @@ include: "mint_block_kenny.view"
 include: "*.dashboard"
 
 explore: mint_kenny {
-  extends: [mint_block_kenny]
+  from: mint_block_kenny
+  extends: [mint_base_explore]
   view_label: "Mint Data"
 }

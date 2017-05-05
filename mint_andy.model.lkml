@@ -7,6 +7,7 @@ include: "*.view"
 include: "*.dashboard"
 
 explore: mint_andy {
-  extends: [mint_block_andy]
+  from: mint_block_andy
+  extends: [mint_base_explore]
   view_label: "Mint Data"
 }

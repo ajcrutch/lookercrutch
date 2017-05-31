@@ -1,4 +1,5 @@
 explore: mint_base_explore {
+  from: mint_base_view
   extension: required
 }
 

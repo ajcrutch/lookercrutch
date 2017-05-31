@@ -1,4 +1,3 @@
-##change this to kenny's mint
 connection: "personal_bq"
 
 # include some the views

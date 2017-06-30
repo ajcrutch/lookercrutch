@@ -191,19 +191,18 @@
     col: 0
     width: 10
     height: 7
-  - name: Daily Averages
-    title: Daily Averages
+  - name: Average Daily Credits/Debits Last 12 Weeks
+    title: Average Daily Credits/Debits Last 12 Weeks
     model: mint_andy
     explore: mint_andy
     type: table
     fields:
-    - mint_data.average_daily_amount
     - mint_data.transaction_type
-    - calendar.count_of_days
+    - mint_data.average_daily_amount
     filters:
-      calendar.date_date: 84 days
+      mint_data.date_date: 84 days
     sorts:
-    - mint_data.average_daily_amount desc
+    - mint_data.transaction_type
     limit: 500
     column_limit: 50
     show_view_names: true
@@ -271,7 +270,7 @@
       mint_andy.debits: "#9e6d75"
     row: 7
     col: 0
-    width: 10
+    width: 9
     height: 4
   filters:
   - name: Date

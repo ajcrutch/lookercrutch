@@ -3,6 +3,13 @@ include: "calendar.view.lkml"
 explore: mint_base_explore {
   extension: required
   from: mint_base_view
+  view_name: mint_data
+  always_filter: {
+    filters: {
+      field: mint_data.obfuscate
+      value: "yes"
+    }
+  }
 }
 
 view: mint_base_view {
@@ -18,13 +25,28 @@ dimension: pkey {
     sql: ${TABLE}.account_name ;;
   }
 
+  dimension: amount_unsigned_raw {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.amount;;
+  }
+
+  dimension: amount_signed_raw {
+    hidden: yes
+    type: number
+    sql: case when ${transaction_type}='credit' then ${amount_unsigned_raw}
+              when ${transaction_type}='debit' then ${amount_unsigned_raw}*-1
+              else null end ;;
+  }
+
   dimension: amount_unsigned {
     label: "Amount"
-    description: "Debit and credit amounts are both positive"
+    description: "Debit and credit amounts are both positive. "
     type: number
     value_format_name: usd
-    sql: ${TABLE}.amount ;;
+    sql: ${amount_unsigned_raw} * ${obfuscate_amount};;
   }
+
 
   dimension: amount_signed {
     label: "Amount Signed"
@@ -39,7 +61,7 @@ dimension: pkey {
   measure: credits {
     value_format_name:  usd
     type: sum
-    sql: ${amount_unsigned} ;;
+    sql: ${amount_unsigned_raw} *${obfuscate_amount} ;;
     filters: {
       field: transaction_type
       value: "credit"
@@ -49,7 +71,7 @@ dimension: pkey {
   measure: debits {
     value_format_name:  usd
     type: sum
-    sql: ${amount_unsigned} ;;
+    sql: ${amount_unsigned_raw} *${obfuscate_amount} ;;
     filters: {
       field: transaction_type
       value: "debit"
@@ -86,7 +108,7 @@ dimension: pkey {
   measure: total_amount {
     value_format_name:  usd
     type: sum
-    sql: ${amount_signed} ;;
+    sql: ${amount_signed_raw} *${obfuscate_amount} ;;
     drill_fields: [transactions*]
   }
 
@@ -101,11 +123,23 @@ dimension: pkey {
     sql: ${total_amount}/nullif(${count_of_days},0);;
   }
 
+  filter: obfuscate {
+    type: string
+    suggestions: ["yes","no"]
+  }
+
+  dimension: obfuscate_amount {
+    hidden: yes
+    type: number
+#     sql: case when {% condition obfuscate %}  then rand()*2 else 1 end ;;
+    sql: if( {% condition obfuscate %} 'yes' {% endcondition %} , rand()*2,1) ;;
+  }
+
   measure: total_amount_unsigned {
     label: "Total Amount Unsigned"
     value_format_name:  usd
     type: sum
-    sql: ${amount_unsigned} ;;
+    sql: ${amount_unsigned_raw} *${obfuscate_amount} ;;
     drill_fields: [transactions*]
   }
 
@@ -167,4 +201,6 @@ dimension: pkey {
   set: transactions {
     fields: [date_date,description,transaction_type,total_amount,account_name]
   }
+
+
 }

@@ -12,7 +12,7 @@ view: mint_block_andy {
 
   dimension: category {
     type: string
-    sql: case when (${amount_signed}=-4000 and ${category_raw}='Check')
+    sql: case when (${amount_signed_raw}=-4000 and ${category_raw}='Check')
               or (${transaction_type}='credit' and substr(${original_description},1,18)='BKOFAMERICA MOBILE')
               then 'Rent, Utilities and Roommates'
     else ${category_raw} end;;

@@ -4,11 +4,7 @@ connection: "personal_bq"
 include: "mint_base.view"
 include: "mint_block_kenny.view"
 
-# include all the dashboards
-include: "*.dashboard"
-
 explore: mint_kenny {
-  from: mint_block_kenny
-  extends: [mint_base_explore]
+  extends: [mint_block_kenny]
   view_label: "Mint Data"
 }

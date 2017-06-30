@@ -1,16 +1,9 @@
 include: "mint_base.view.lkml"
 
 explore: mint_block_andy {
+  extends: [mint_base_explore]
   extension: required
-  from: calendar
-  view_name: calendar
-  join: mint_data {
-    from: mint_block_andy
-    view_label: "Mint Data"
-    type: left_outer
-    sql_on: ${mint_data.date_raw}=${calendar.date_raw} ;;
-    relationship: one_to_many
-  }
+  from: mint_block_andy
 }
 
 view: mint_block_andy {
@@ -26,3 +19,17 @@ view: mint_block_andy {
   }
 
   }
+
+# Didn't end up needing a calendar table!  Good thing, it's complex!
+# explore: mint_block_andy {
+#   extension: required
+#   from: calendar
+#   view_name: calendar
+#   join: mint_data {
+#     from: mint_block_andy
+#     view_label: "Mint Data"
+#     type: left_outer
+#     sql_on: ${mint_data.date_raw}=${calendar.date_raw} ;;
+#     relationship: one_to_many
+#   }
+# }

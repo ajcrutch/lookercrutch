@@ -1,15 +1,9 @@
 include: "calendar.view.lkml"
 
-# explore: mint_base_explore {
-#   extension: required
-#   from: calendar
-#   view_name: calendar
-#   join: mint_base_view {
-#     type: left_outer
-#     sql_on: ${mint_base_view.date_raw}=${calendar.date_raw} ;;
-#     relationship: one_to_many
-#   }
-# }
+explore: mint_base_explore {
+  extension: required
+  from: mint_base_view
+}
 
 view: mint_base_view {
 
@@ -96,10 +90,15 @@ dimension: pkey {
     drill_fields: [transactions*]
   }
 
+  measure: count_of_days {
+    type: number
+    sql: date_diff({% date_end date_date %},{% date_start date_date %},day);;
+  }
+
   measure: average_daily_amount {
     value_format_name:  usd
     type: number
-    sql: ${total_amount}/nullif(${calendar.count_of_days},0);;
+    sql: ${total_amount}/nullif(${count_of_days},0);;
   }
 
   measure: total_amount_unsigned {
@@ -117,7 +116,7 @@ dimension: pkey {
   }
 
   dimension_group: date {
-    hidden: yes
+#     hidden: yes
     label: ""
     type: time
     timeframes: [

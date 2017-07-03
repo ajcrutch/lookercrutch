@@ -10,6 +10,11 @@ explore: mint_base_explore {
       value: "yes"
     }
   }
+  # join: budget {
+  #   type: left_outer
+  #   sql_on: ${mint_data.date_month}=${budget.budget_month} ;;
+  #   relationship: many_to_many
+  # }
 }
 
 view: mint_base_view {

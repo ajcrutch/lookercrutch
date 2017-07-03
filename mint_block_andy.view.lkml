@@ -18,6 +18,11 @@ view: mint_block_andy {
     else ${category_raw} end;;
   }
 
+  # dimension: discretionary {
+  #   type: yesno
+  #   sql: case when  ;;
+  # }
+
   }
 
 # Didn't end up needing a calendar table!  Good thing, it's complex!

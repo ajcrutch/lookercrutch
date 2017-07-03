@@ -1,4 +1,4 @@
-include: "calendar.view.lkml"
+# include: "calendar.view.lkml"
 
 explore: mint_base_explore {
   extension: required

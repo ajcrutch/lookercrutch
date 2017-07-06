@@ -122,6 +122,16 @@ dimension: pkey {
     sql: date_diff({% date_end date_date %},{% date_start date_date %},day);;
   }
 
+  measure: count_of_days_not_work {
+    type: number
+    sql: date_diff(max(${date_date}),min(${date_date}),day);;
+  }
+
+  measure: count_of_days_not_as_good {
+    type: count_distinct
+    sql: ${date_date};;
+  }
+
   measure: average_daily_amount {
     value_format_name:  usd
     type: number

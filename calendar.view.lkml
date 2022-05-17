@@ -3,6 +3,7 @@
 #   derived_table: {
 #     datagroup_trigger: calendar
 #     sql: WITH
+#test
 #
 #             splitted AS (
 #               SELECT
